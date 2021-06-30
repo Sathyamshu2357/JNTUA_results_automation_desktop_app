@@ -87,6 +87,6 @@ typings/
 
 # Electron-Forge
 out/
-
+dist/
 /rollnumbers.xlsx
 

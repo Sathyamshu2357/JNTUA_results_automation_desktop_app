@@ -27,7 +27,7 @@
     }
   },
   "keywords": [],
-  "author": "sathyamshu",
+  "author": "Sathyamshu",
   "license": "MIT",
   "config": {
     "forge": {
@@ -60,8 +60,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "excel4node": "^1.7.2",
     "puppeteer": "^10.0.0",
-    "read-excel-file": "^5.2.4",
-    "trim-newlines": "3.0.1"
+    "read-excel-file": "^5.2.4"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.57",
@@ -69,6 +68,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.57",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
     "@electron-forge/maker-zip": "^6.0.0-beta.57",
-    "electron": "13.1.2"
+    "electron": "13.1.2",
+    "electron-builder": "^22.11.7"
   }
 }
