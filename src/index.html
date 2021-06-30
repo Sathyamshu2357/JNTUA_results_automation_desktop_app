@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>JNTUA RESULTS AUTOMATION</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="../fafaicons/css/font-awesome.min.css">
+
+
+  <script>
+
+    function shortenHeader() {
+      var header_section = document.getElementById("header-section");
+      var body_section = document.getElementById("body-section");
+      header_section.classList.remove("is-fullheight");
+      header_section.classList.add("is-halfheight");
+      setTimeout(() => {
+        header_section.classList.remove('is-halfheight');
+        header_section.classList.add('is-small');
+      }, 500);
+      body_section.classList.remove('is-hidden');
+    }
+
+  </script>
+
+</head>
+
+<body class="hideScrollbar">
+  <section id="header-section" class="hero is-black is-bold is-fullheight" onclick="shortenHeader()">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <p class="title">
+          JNTUA RESULTS AUTOMATION
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="body-section" class="hero is-hidden">
+    <div class="columns has-text-centered">
+      <div class="column is-one-third">
+        <br>
+        <div class="field" style="padding: 15px;">
+          <label class="label">Url Link</label>
+          <div class="control has-icons-left has-icons-right">
+            <input id="urlLink" class="input is-black" type="url" placeholder="https://www.jntuaresults.com">
+            <span class="icon is-small is-left">
+              <i class="fa fa-code"></i>
+            </span>
+
+          </div>
+        </div>
+        <br><br>
+        <div class="field" style="padding-right: 100px; padding-left: 100px ;">
+          <label class="label">Number of Subjects</label>
+          <div class="control has-icons-left has-icons-right">
+            <input id="numberOfSubjects" class="input is-primary" type="number" value="8">
+            <span class="icon is-small is-left">
+              <i class="fa fa-list-ol"></i>
+            </span>
+
+          </div>
+        </div>
+        <br><br>
+        <div class="field" style="padding: 15px;">
+          <label class="label">Results File Name</label>
+          <div class="control has-icons-left has-icons-right">
+            <input id="outputFile" class="input is-black" type="url" placeholder="III - II CSE A">
+            <span class="icon is-small is-left">
+              <i class="fa fa-pencil"></i>
+            </span>
+
+          </div>
+        </div>
+        <br><br>
+        <button id="generateButton" class="button is-success" onclick="generateResults()"
+          style="padding-left: 50px; padding-right: 50px;">Generate Results</button>
+        <br><br>
+        <div id="progressDiv" class="is-hidden" style="padding : 10px;">
+          <progress id="progressBar" style="margin-bottom: 10px;" class="progress is-link" value="0" max="100"></progress>
+          <span id="stats" style="float: right;" class="tag is-success is-light">0/0</span>
+        </div>
+        <br><br>
+      </div>
+      <br><br>
+      <div id="vertical-line"></div>
+      <div class="column" style="padding: 0px;;">
+        <div class='rows' style="padding: 0px;">
+          <div class='row is-full'>
+            <div class="section is-small" style=" width: 750px; padding-top : 40px; padding-bottom: 20px;">
+              <div class="columns row is-full hideScrollbar" id="allRollNumbers"
+                style="border-radius: 10px; padding-bottom: 0; padding-top: 0; height: 270px; overflow:auto; background-color:#1f2330;">
+              </div>
+              <div class="columns is-mobile is-centered">
+                <div class="column is-4">
+                  <div class="file">
+                    <label class="file-label">
+                      <input class="file-input" type="file" id="excelfile" onchange="handleFile()">
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fa fa-upload"></i>
+                        </span>
+                        <span id="file-name" class="file-label">
+                          Choose a file…
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="column is-4">
+                  <div class="control">
+                    <div class="select">
+                      <select id="sheetNames" onchange="handleSheet()">
+                        <option>Sheet Name</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <div class="control">
+                    <div class="select">
+                      <select id="columnNames" onchange="handleColumn()">
+                        <option>Column Name</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr style="margin: 0; border-top: 3px solid black;">
+          <div class='row is-full'>
+            <div class="columns">
+              <div class="column" style="padding-left: 50px; padding-top: 40px;">
+                <div class="columns row is-full hideScrollbar" id="fetchedRollNumbers"
+                  style="width: 410px; border-radius: 10px; padding-bottom: 0; padding-top: 0; height: 270px; overflow:auto; background-color:#1f2330;">
+                  
+                </div>
+              </div>
+              <div class="column" style="padding-left: 20px; padding-top: 40px;">
+                <div class="columns row is-full hideScrollbar" id="unfetchedRollNumbers"
+                  style="width: 260px; border-radius: 10px; padding-bottom: 0; padding-top: 0; height: 270px; overflow:auto; background-color:#1f2330;">     
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+</body>
+<script src="renderer.js"></script>
+
+<script>
+  function handleFile() {
+    var excelfile = document.getElementById("excelfile");
+    document.getElementById("file-name").innerText = excelfile.files[0].name;
+    readExcelFile(excelfile.files[0]);
+  }
+
+  function handleSheet() {
+    readExcelSheet(
+      document.getElementById("excelfile").files[0],
+      document.getElementById("sheetNames").value
+    );
+  }
+
+  function handleColumn() {
+    getRolls(
+      document.getElementById("excelfile").files[0],
+      document.getElementById("sheetNames").value,
+      document.getElementById("columnNames").value
+    );
+  }
+
+</script>
+
+</html>
