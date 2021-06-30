@@ -8,11 +8,11 @@
 
 <h3> For Developers </h3>
 
-You should have NPM...
+You should have NPM...<br>
 
-git clone https://github.com/Sathyamshu2357/JNTUA_results_automation_desktop_app.git
-npm i
-npm start
+git clone https://github.com/Sathyamshu2357/JNTUA_results_automation_desktop_app.git <br>
+npm i <br>
+npm start <br>
 
 <h4> LICENSE </h4>
 
