@@ -4,7 +4,7 @@
 
 <h3> For Non Developers </h3>
 
-<a href="https://github.com/Sathyamshu2357/JNTUA_results_automation_desktop_app/releases/download/1.0.0/JNTUA_Results_Automation-1.0.0.Setup.exe" download> Click This to Get the DESKTOP APP </a>
+<a href="https://github.com/Sathyamshu2357/JNTUA_results_automation_desktop_app/releases/download/1.2.0/JNTUA_Results_Automation-1.0.0.Setup.exe" download> Click This to Get the DESKTOP APP </a>
 
 <h3> For Developers </h3>
 
